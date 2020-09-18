@@ -400,7 +400,6 @@ exports.fetchBvnData = async (request, response) => {
 
 // Trigger email onUpdate (document approved)
 exports.sendApprovalEmail = async (change, context) => {
-console.log('here i am')
     // Read the user document
     const user = change.after.data();
 
@@ -415,7 +414,6 @@ console.log('here i am')
         // Email
         const msg = {
             to: user.email,
-            from: functions.config().zohomail.email,
             subject: `Approved - Your documents have been approved`,
             body: approvalBody
         };

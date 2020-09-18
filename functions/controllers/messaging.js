@@ -3,18 +3,22 @@ const Axios = require('axios');
 const config = require('../util/config');
 const functions = require('firebase-functions');
 
+// api.ringcaptcha.com
+const APP_KEY= functions.config().ringcaptcha.app_key; 
+const API_Key= functions.config().ringcaptcha.api_key;
+
+// zohomail.com
+const email= functions.config().zohomail.email; 
+const password= functions.config().zohomail.password;
+
 var transporter = nodemailer.createTransport({
     host: "smtp.zoho.com",
     port: 465,
     auth: {
-      user: functions.config().zohomail.email, 
-      pass: functions.config().zohomail.password
+      user: email, 
+      pass: password
     }
   });
-
-// api.ringcaptcha.com
-const APP_KEY= functions.config().ringcaptcha.app_key; 
-const API_Key= functions.config().ringcaptcha.api_key;
 
   
 exports.sendVerificationCode = (phoneNumber) => {
@@ -44,7 +48,7 @@ exports.confirmVerificationCode = (token, code) => {
  exports.sendEmail = (params) => {
 
     const mailOptions = {
-        from: params.from, //Sender's email
+        from: email, //Sender's email
         to: params.to, //Recipient's email
         subject: params.subject, //Email subject
         html: params.body //Email content in HTML
